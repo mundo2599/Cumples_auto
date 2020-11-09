@@ -2,6 +2,7 @@ import numpy as np
 import os
 from PIL import ImageFont, ImageDraw, Image
 import cv2
+from datetime import date
 
 class Creador():
     def __init__(self):
@@ -20,12 +21,16 @@ class Creador():
         self.base_path = "images/base.jpg"
         self.img_base = cv2.imread(self.base_path)
 
-    def create(self, nombre: str, numero: int, fecha: ()):
+        try:
+            os.mkdir(self.path_results)
+        except:
+            pass
+
+    def create(self, nombre: str, numero: int, fecha: date):
         img = self.img_base.copy()
         texto = self.titulo + nombre + '!'
         x = 50
         y = 100
-        rgb = (0, 0, 0)
 
         font_path = "fuentes/Subway-Black.ttf"
         font = ImageFont.truetype(font_path, 70)
@@ -36,8 +41,8 @@ class Creador():
 
         # font = cv2.FONT_HERSHEY_TRIPLEX
         # cv2.putText(img, texto, (x, y), font, 3, rgb, 2, cv2.LINE_AA)
-        month_folder = self.path_results + str(fecha[0]) + '/'
-        day_folder = str(fecha[1]) + '/'
+        month_folder = self.path_results + fecha.strftime("%B") + '/'
+        day_folder = str(fecha.day) + '/'
         try:
             os.mkdir(month_folder)
         except:

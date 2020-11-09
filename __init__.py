@@ -1,16 +1,18 @@
 from creador import Creador
 from excel import Excel
-from datetime import datetime
+from datetime import date
 
-excel = Excel()
-maker = Creador()
 
 print('Inicio')
-inicio = (int(input('Mes: ')), int(input('Dia: ')))
+inicio = date(1, int(input('Mes: ')), int(input('Dia: ')))
 print('Fin')
-fin = (int(input('Mes: ')), int(input('Dia: ')))
+fin = date(1, int(input('Mes: ')), int(input('Dia: ')))
+excel = Excel(inicio, fin)
 
-personas = excel.get_names(inicio, fin)
+maker = Creador()
+personas = excel.get_names()
+
+# Crear fotos
 for x in personas:
     nombre = x['nombre']
     if '.' in nombre:
@@ -23,6 +25,9 @@ for x in personas:
     nombre = nombre.lower()
     maker.create(nombre, x['numero'], x['fecha'])
     print('Creado: ' + nombre)
+
+# Crear csv
+excel.crear_csv()
 
 # TODO: Archivo de excel con enlace
 # TODO: Primer letra de nombre mayuscula
